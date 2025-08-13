@@ -6,7 +6,10 @@ utilizes the Google Apps Script platform to automate the process and send notifi
 # To use
 
 1. Clone this repository
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5361f5025962282f921ef9445b6d04944c62681a
 2. Run below:
 
 ```bash
@@ -16,6 +19,7 @@ npm run push
 ```
 
 3. Then, you can find the script in your Google apps script page.
+<<<<<<< HEAD
 
 4. Go to the script editor and make new HTML file named "template"
 
@@ -29,6 +33,13 @@ npm run push
 
 7. Back to editor and click [Add a service] button on left side panel and select "YouTube Data API"
 
+=======
+4. Go to the script editor and make new HTML file named "template"
+5. Copy html code from this repository's "src/template.html" and paste it into the HTML file in GAS editor.
+6. Set script property `emailaddress` at GAS project setting page. _example: ["example@domain.com"]_ ↑need to
+   array of string
+7. Back to editor and click [Add a service] button on left side panel and select "YouTube Data API"
+>>>>>>> 5361f5025962282f921ef9445b6d04944c62681a
 8. Click [Run] button.
 
 opusionaly, you can add trigger in GAS project trigger page.
