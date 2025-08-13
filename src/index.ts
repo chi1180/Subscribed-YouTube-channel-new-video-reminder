@@ -1,6 +1,8 @@
 // You can access any of the global GAS objects in this file. You can also
 // import local files or external dependencies:
-export { helloWorld } from "./example";
+
+// export { helloWorld } from "./example"; <- It's an example
+export { main } from "./main";
 
 // Simple Triggers: These five export functions are reserved export function names that are
 // called by Google Apps when the corresponding event occurs. You can safely
