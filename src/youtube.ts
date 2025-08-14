@@ -11,7 +11,7 @@ class YouTubeUtilities {
     do {
       const result = YouTube.Subscriptions?.list("snippet", {
         mine: true,
-        mexResults: 50,
+        maxResults: 50,
         pageToken: nextPageToken,
       });
 
@@ -51,12 +51,15 @@ class YouTubeUtilities {
     const responseData: responseDataFormat = [];
 
     for (const channel of channels) {
-      const channelId: string = channel.snippet?.channelId || "";
+      const channelId: string = channel.snippet?.resourceId?.channelId || ""; // I mistook it to my channel ID... :(
       const channelVideos = this.getNewVideos(channelId, since);
-      responseData.push({
-        channel: channel,
-        videos: channelVideos,
-      });
+      const hasNewVideo = channelVideos.length > 0;
+      if (hasNewVideo) {
+        responseData.push({
+          channel: channel,
+          videos: channelVideos,
+        });
+      }
     }
 
     return responseData;
@@ -66,14 +69,20 @@ class YouTubeUtilities {
   //
   /* HTML special code decoder */
   decodeHtmlSpecialCode(text: string) {
-    const decoded = HtmlService.createHtmlOutput(text).getContent();
-    return decoded;
+    return text
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&#x27;/g, "'");
   }
   /* Main formattor */
   responseDataFormattor(searchData: responseDataFormat) {
     const response: formattedDataFormat = [];
     for (const data of searchData) {
-      const channelTitle = data.channel.snippet?.channelTitle || "Untitled channel";
+      const channelTitle =
+        data.channel.snippet?.channelTitle || data.channel.snippet?.title || "Untitled channel";
       const videos: channelVideosDataFormat = [];
 
       for (const video of data.videos) {
@@ -102,7 +111,7 @@ class YouTubeUtilities {
 
     console.log("[--INFO--] Getting new videos...");
     const yesterday = new Date();
-    yesterday.setHours(yesterday.getHours() - 24);
+    yesterday.setDate(yesterday.getDate() - 1);
     const responseData = this.getAllChannelsNewVideos(channels, yesterday);
 
     console.log("[--INFO--] Formatting new videos data...");
