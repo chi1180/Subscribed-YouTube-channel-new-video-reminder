@@ -1,6 +1,10 @@
+type VideoResult =
+  | GoogleAppsScript.YouTube.Schema.SearchResult
+  | GoogleAppsScript.YouTube.Schema.PlaylistItem;
+
 type responseDataFormat = {
   channel: GoogleAppsScript.YouTube.Schema.Subscription;
-  videos: GoogleAppsScript.YouTube.Schema.SearchResult[];
+  videos: VideoResult[];
 }[];
 
 type channelVideosDataFormat = {
@@ -14,4 +18,4 @@ type formattedDataFormat = {
   videos: channelVideosDataFormat;
 }[];
 
-export type { responseDataFormat, channelVideosDataFormat, formattedDataFormat };
+export type { responseDataFormat, channelVideosDataFormat, formattedDataFormat, VideoResult };
